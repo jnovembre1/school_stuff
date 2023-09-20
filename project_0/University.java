@@ -8,11 +8,13 @@ Writing a program that stores and retrieves information related to universities,
 */
 
 import java.util.Scanner;
-
+import java.util.*;
 
 public class University {
     
     
+    public static Collection<University> col = new ArrayList<University>();
+   
     private String uniName;
     private String nickName;
     private String uniCity;
@@ -26,58 +28,90 @@ public class University {
         Scanner myScanner = new Scanner(System.in);
 
         System.out.println("Welcome to this University Collection program, please type 'help' for a list of commands.");
-        boolean exit = true;
-        
-        while (exit == true)
+        while (true)
         {
                 String userInput = myScanner.nextLine();
-
-            if (userInput.equals("help")) 
-                System.out.println("The commands are, list, exit, add, delete, search, save, and help");
-            else if (userInput.equals("add")) {
-            
-                String userUniName = getInput();
-                String userNick = myScanner.nextLine();
-                String userCity = myScanner.nextLine();
-                String userState = myScanner.nextLine();
-                int userYear = myScanner.nextInt();
-                int userBodySize = myScanner.nextInt();
-                System.out.println("Inputs succesfully registered");
-            
-                University u = new University(userUniName, userNick, userCity, userState, userYear,userBodySize);
-                System.out.println(u.getUniName());
-                System.out.println(u.getNickName());
-
-            
-        } 
-            else if (userInput.equals("exit")) {
-
-                System.out.println("Thanks for using this program.");
-                exit = false;
-            }
-            else;
+                programLoop(userInput);            
+                System.out.println(col);
         }
         
 
         
+
+    }
+    
+    public static void helpCommand() {
+        System.out.println("The commands are, list, exit, add, delete, search, save, and help");
+    }
+
+    public static void exitCommand() {
+        System.exit(0);
+    }
+
+    public static void addCommand() {
         
+        boolean duplicate = false;
+        System.out.println("Enter the name of the University.");
+        String userUniName = getInput();
+        for (University u : col)
+        {
+            if (u.uniName.toLowerCase().contains(userUniName.toLowerCase())) {
+            System.out.println("Error, university already in list");
+            duplicate = true;
+            }
+            else;
+        }
+        if (duplicate == false) {
+        System.out.println("Enter the Universitys nickname.");
+        String userNick = getInput();
 
+        System.out.println("Enter the Universitys City.");
+        String userCity = getInput();
 
+        System.out.println("Enter the Universitys State.");
+        String userState = getInput();
+
+        System.out.println("Enter the year the University was founded.");
+        int userYear = getInputInt();
+
+        System.out.println("Enter the Universitys student body size.");
+        int userBodySize = getInputInt();
+        System.out.println("Inputs succesfully registered");
+
+        University u = new University(userUniName, userNick, userCity, userState, userYear,userBodySize);
+        col.add(u);
+        }
+    }
+
+    public static void programLoop(String userInput) {
+        
+        
+        if (userInput.equals("help"))
+        helpCommand();
+        else if (userInput.equals("add"))
+        addCommand();
+        else if (userInput.equals("exit"))
+        exitCommand();
     }
 
     public University (String uniName, String nickName, 
     String uniCity, String uniState, int foundedYear, int studentBodySize) {
         setUniName(uniName);
         setNickName(nickName);
-        uniCity = getUniCity();
-        uniState = getUniState();
-        foundedYear = getFoundedYear();
-        studentBodySize = getStudentSize();
+        setUniCity(uniCity);
+        setUniState(uniState);
+        setFoundedYear(foundedYear);
+        setStudentSize(studentBodySize);
     }
 
     public static String getInput() {
         Scanner myScanner = new Scanner(System.in);
         return myScanner.nextLine();
+    }
+
+    public static int getInputInt() {
+        Scanner myScanner = new Scanner(System.in);
+        return myScanner.nextInt();
     }
     
     public String getUniName() {
