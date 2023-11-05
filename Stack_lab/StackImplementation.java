@@ -30,7 +30,7 @@ public class StackImplementation<T>
         if (stack.length == itemsOnStack) {
             System.out.println("Error, the stack is full."); //unsure if you wanted us to keep this error statement or not
                                                                //with the inclusion of expandedArray()
-            //expandArray();
+            expandArray();
         }
         else {
             stack[itemsOnStack] = (T) item;

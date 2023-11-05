@@ -3,15 +3,17 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class peopleFile {
-    int pref1;
-    int pref2;
-    int pref3;
+    private int pref1;
+    private int pref2;
+    private int pref3;
     
     
     static Scanner peopleScanner = new Scanner(System.in);
 
     public peopleFile (int pref1, int pref2, int pref3) {
-        
+        this.pref1 = pref1;
+        this.pref2 = pref2;
+        this.pref3 = pref3;
     }
     
     public static int getNumberPeople() {
@@ -51,7 +53,17 @@ public class peopleFile {
         return peopleList;
     }
 
-    
+    public int getPref1() {
+        return pref1;
+    }
+
+    public int getPref2() {
+        return pref2;
+    }
+
+    public int getPref3() {
+        return pref3;
+    }
 }
 
 
