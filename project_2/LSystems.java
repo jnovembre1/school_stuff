@@ -23,7 +23,7 @@ public class LSystems {
 
             boolean error = false;
             while (error == false) {
-                try {
+                try { //worlds worst error catcher. still better than no error catcher.
                     System.out.println("Enter the angle of the L-System: ");
                     int degree = scanner.nextInt(); //useless
                 
@@ -103,7 +103,8 @@ public class LSystems {
             queue.add(queueArray[k]);
             
         }
-        return expansions -1;
+
+        return expansions -1; //i opted for this vs a special character in the string. it wasn't listed in requirements and this looks and works better soo.
     }
 
     
