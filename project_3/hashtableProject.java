@@ -53,11 +53,11 @@ public class hashtableProject {
                 int index = Math.abs(s.hashCode()) % 1091;
                                     table[index].put(s.hashCode(),s);
 
-                /*if (!table[index].containsKey(s.hashCode())) {
+                if (!table[index].containsKey(s.hashCode())) {
                     
 
                     table[index].put(s.hashCode(),s);
-                }*/
+                }
                 
             }
         }
