@@ -5,49 +5,43 @@
 package project_3;
 
 import java.io.*;
-import java.util.Hashtable;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class hashtableProject {
-    
-    static File file = new File ("/Users/localadmin/school_code/project_3/gatsby.txt"); //did absolute path since relative was being dumb
-    static Hashtable<Integer, String>[] table = new Hashtable[1091];  //hashtable initalized with 1091 buckets(arrays)
 
-    
-    public static void main(String[] args) { 
+    static File file = new File("/Users/localadmin/school_code/linear_data_structures/project_3/gatsby.txt");
+    static LinkedList<Entry>[] table = new LinkedList[1091];
+
+    public static void main(String[] args) {
         populateTable();
         fileReader();
         tableData();
-        
     }
 
-
-    public static void populateTable() { //initalizes our buckets in hashtable
+    public static void populateTable() {   //populates table
         for (int i = 0; i < table.length; i++) {
-            table[i] = new Hashtable<>();
+            table[i] = new LinkedList<>();
         }
     }
 
-    public static void tableData() { //prints out each word in hashtable, then prints total count of unique words
+    public static void tableData() {    //prints info from table
         int w = 0;
         for (int i = 0; i < table.length; i++) {
-            w+= table[i].size();
+            w += table[i].size();
         }
 
-        for (Hashtable<Integer,String> a : table) {
-            for (String s : a.values()) {
-                System.out.println(s);
+        for (LinkedList<Entry> bucket : table) {
+            for (Entry entry : bucket) {
+                System.out.println(entry.value);
             }
         }
         System.out.println("Total words: " + w);
-
     }
 
-    public static void fileReader () { //populates table from .txt file
+    public static void fileReader() {   //reads in from txt file
         try {
-            Scanner scanner = new Scanner(
-                new BufferedReader(
-                    new FileReader(file)));
+            Scanner scanner = new Scanner(new BufferedReader(new FileReader(file)));
             while (scanner.hasNext()) {
                 String s = scanner.next();
                 s = s.toLowerCase();
@@ -55,17 +49,46 @@ public class hashtableProject {
                 s = s.replaceAll("[^a-zA-Z]+$", "");
 
                 int index = Math.abs(s.hashCode()) % 1091;
-                                    table[index].put(s.hashCode(),s);
+                Entry entry = new Entry(s);
 
-                if (!table[index].containsKey(s.hashCode())) {
-                    
+                LinkedList<Entry> collisionList = table[index]; //collision handling with linkedlist
+                boolean found = false;
 
-                    table[index].put(s.hashCode(),s);
+                for (Entry existingEntry : collisionList) { //checks if already in list
+                    if (existingEntry.equals(entry)) {
+                        found = true;
+                        break;
+                    }
                 }
-                
+
+                if (!found) {                       //self explanatory
+                    collisionList.add(entry);
+                }
             }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-        catch (FileNotFoundException e) {
+    }
+
+    static class Entry {   //class to handle words as Entry objects
+        String value;
+
+        Entry(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) return true;
+            if (obj == null || getClass() != obj.getClass()) return false;
+            Entry entry = (Entry) obj;
+            return value.equals(entry.value);
+        }
+
+        @Override
+        public int hashCode() {
+            return value.hashCode();
         }
     }
 }
+
