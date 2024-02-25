@@ -1,0 +1,16 @@
+Answers to 2B below:
+
+1: O(N), worst case is traversing all blocks to find the index
+2: O(N), similar to above. may need to shift all elements after insertion point.
+3: O(N), similar to insertion except shifting after removal point.
+4: O(N) still, worst case is maybe traversing all blocks to find the index
+
+2C below:
+Storing stuff in blocks means that it is more memory-efficient than a singly linked
+list, no individual nodes everywhere.
+Probably takes a lot of process to move and shift elements when inserting/removing.
+
+2D below:
+Constant block size means we have a good idea of what memory usage will look like.
+If blocks aren't fully utilized, wasted memory vs a dynamic array which will not
+have that problem.
