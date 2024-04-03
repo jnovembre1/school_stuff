@@ -86,12 +86,11 @@ bool IndexedBST::remove(double key) {
     bool isLeftChild = false;
 
     while (current != nullptr && current->key != key) {
-        
         parent = current;
         if (key < current->key) {
+            current->leftSize--;
             current = current->left;
             isLeftChild = true;
-            
         }
         else {
             current = current->right;
@@ -104,14 +103,12 @@ bool IndexedBST::remove(double key) {
     }
 
     if (current->left == nullptr && current-> right == nullptr) { 
-        
         if (current == root) {
             root = nullptr;
         }
         else {
             if (isLeftChild) {
                 parent->left = nullptr;
-                current->leftSize--;
             }
             else {
                 parent-> right = nullptr;
@@ -120,15 +117,12 @@ bool IndexedBST::remove(double key) {
         delete current;
     }
     else if (current-> left == nullptr) {
-        
         if (current==root) {
             root = current->right;
 
         }
         else if (isLeftChild) {
             parent->left = current->right;
-            current->leftSize--;
-
         }
         else {
             parent->right = current->right;
@@ -143,8 +137,6 @@ bool IndexedBST::remove(double key) {
         }
         else if (isLeftChild) {
             parent->left = current->left;
-            current->leftSize--;
-        
 
         }
         else {
@@ -158,6 +150,7 @@ bool IndexedBST::remove(double key) {
         while (successor->left != nullptr) {
             successor = successor->left;
         }
+        
         
         double successorKey = successor->key;
         remove(successorKey);
